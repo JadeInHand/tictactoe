@@ -1,0 +1,86 @@
+td {
+height: 100px;
+width: 100px;
+background-color: pink;
+text-align: center;
+font-size: 70px;
+box-shadow: 1px 3px 2px rgba(100,50,0,0.2);
+border-radius: 100%;
+}
+
+.play {
+	position: absolute;
+	left: 30px;
+	height: 75px;
+}
+.reset {
+	position: absolute;
+	left: 87px;
+	height: 75px;
+	top: 322px;
+}
+div {
+	max-width: 960px;
+}
+
+
+body {
+	background: "/page-background.png";
+}
+
+h3 {
+	text-shadow: 1px 3px 2px rgba(100,50,0,0.2);
+}
+
+.gameboard {
+	max-width: 960px;
+	margin: 0 auto;
+	text-align: center;
+	position: relative;
+	width: 520px;
+	height: 350px;
+}
+
+.winCounterO {
+	position: absolute;
+	text-align: center;
+	line-height: 60px;
+	width: 60px;
+	height: 80px;
+	border: 1px solid black;
+	left: 350px;
+	top: 130px;
+}
+
+.winCounterX {
+	position: absolute;
+	text-align: center;
+	line-height: 50px;
+	width: 60px;
+	height: 80px;
+	border: 1px solid black;
+	left: 350px;
+	top: 217px;
+}
+.drawCounter{
+	position: absolute;
+	text-align: center;
+	line-height: 45px;
+	width: 65px;
+	height: 100px;
+	border: 1px solid black;
+	left: 427px;
+	top: 164px;
+}
+.currentPlayer {
+	position: absolute;
+	text-align: center;
+	line-height: 38px;
+	width: 180px;
+	height: 89px;
+	left: 329px;
+	top: 5px;
+	font-size: 26px;
+
+}
+
