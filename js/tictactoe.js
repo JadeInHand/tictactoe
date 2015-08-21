@@ -364,11 +364,11 @@ var $ticTacToe = {
 			$('.drawCounter').text('DRAW: ' + $ticTacToe.drawCount);
 			$ticTacToe.reset();
 		} 
-		if ($ticTacToe.drawCount >= 1) {
-			alert("Try again.");
-		} else if ($ticTacToe.drawCount >= 5) {
-			alert("I'm sure you'll get it if you keep trying.")
-		} 
+//		if ($ticTacToe.drawCount >= 1) {
+//			alert("Try again.");
+//		} else if ($ticTacToe.drawCount >= 5) {
+//			alert("I'm sure you'll get it if you keep trying.")
+//		} 
 	},
 
 	reset: function(){ // resets values back to game start values.
