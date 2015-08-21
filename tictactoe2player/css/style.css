@@ -1,31 +1,30 @@
 td {
-height: 100px;
-width: 100px;
-background-color: pink;
-text-align: center;
-font-size: 70px;
-box-shadow: 1px 3px 2px rgba(100,50,0,0.2);
-border-radius: 10px 10px 10px 10px;
+	height: 100px;
+	width: 100px;
+	background-color: pink;
+	text-align: center;
+	font-size: 70px;
+	box-shadow: 1px 3px 2px rgba(100,50,0,0.2);
+	border-radius: 10px 10px 10px 10px;
 }
 
 .play {
 	position: absolute;
 	left: 30px;
 	height: 75px;
-	top:322px;
 }
 
 .playertwo {
 	position: absolute;
-	left: 300px;
+	left: 170px;
 	height: 75px;
-	top: 322px;
 }
 
 .reset {
 	position: absolute;
-	left: 87px;
-	height: 75px;
+	width: 105px;
+	left: 106px;
+	height: 40px;
 	top: 322px;
 }
 

@@ -1,14 +1,13 @@
 var $ticTacToe = {
 	numMoves: 1,
-	xNumMoves: 0,
-	oNumMoves: 0,
 	currentMove: "O",
 	winCountX: 0,
 	winCountO: 0,
 	drawCount: 0,
-	boxArray: [$('.box1'), $('.box2'), $('.box3'),
-				$('.box4'), $('.box5'), $('.box6'),
-				$('.box7'), $('.box8'), $('.box9')],
+	player: "",
+	computerIs: "",
+	playerMoves: 0,
+	compMoves: 0,
 	box1: function(input){$('.box1').text(input)},
 	box2: function(input){$('.box2').text(input)},
 	box3: function(input){$('.box3').text(input)},
@@ -25,40 +24,65 @@ var $ticTacToe = {
 				 console.log('theres already a selection there.');
 				 alert('You cant go there, choose again');
 			} else {
-				$(this).text($ticTacToe.currentMove);
+				$(this).text($ticTacToe.player);
 				$ticTacToe.playerCheck();
 			};		
 			//$(this).off();
 		});
 		$('.play').on('click', function(){
-			$ticTacToe.computer();
+			$('.play').hide();
+			$('.chooseX').show();
+			$('.chooseO').show();
+		});
+		$('.chooseX').on('click', function(){
+			$('.chooseX').hide();
+			$('.chooseO').hide();
 			$('table').show();
 			$('.winCounter').show();
-			$('.play').hide();
 			$('.reset').show();
+			$ticTacToe.player = "X";
+			$ticTacToe.computerIs = "O";
+			$('.currentPlayer').text("You are playing as " + $ticTacToe.player + ".");
+			$ticTacToe.computer();
+
 		});
+		$('.chooseO').on('click', function(){
+			$('.chooseX').hide();
+			$('.chooseO').hide();
+			$('table').show();
+			$('.winCounter').show();
+			$('.reset').show();
+			$ticTacToe.player = "O";
+			$ticTacToe.computerIs = "X";
+			$('.currentPlayer').text("You are playing as " + $ticTacToe.player + ".");
+			$ticTacToe.computer();
+		});
+
 		$('.reset').on('click', function(){
 			$ticTacToe.reset();
+
 		});
 
 	},
 
-	playerCheck: function() {
+	playerCheck: function() { // checks the players moves for win or draw & progresses the num moves ahead to help with checking draw. also calls on computer to make its next move.
 		$ticTacToe.checkDraw();
-		$ticTacToe.checkO();
+		$ticTacToe.check();
 		$ticTacToe.numMoves = $ticTacToe.numMoves + 1;
-		$ticTacToe.currentMove = "X";
+		$ticTacToe.playerMoves = $ticTacToe.playerMoves + 1;
+		$ticTacToe.currentMove = $ticTacToe.computerIs;
 		$ticTacToe.computer();
 	},
-	// write a for statement for the AI that loops through the box numbers & checks for opponents winnings moves. then another functions which operates after this that loops through the other possible options on the board. 
-	computerCheck: function(){
-		$ticTacToe.checkX();
+	
+	computerCheck: function(){ // checks if the computer has won & progresses num moves ahead to aid with checking for draw.
+		$ticTacToe.check();
 		$ticTacToe.checkDraw();
+		$ticTacToe.compMoves = $ticTacToe.compMoves + 1;
 		$ticTacToe.numMoves = $ticTacToe.numMoves + 1;
-		$ticTacToe.currentMove = "O";
+		$ticTacToe.currentMove = $ticTacToe.player; // changes current move back to player value.
 	},
 
-	computer: function() { 
+	computer: function() { // this is the AI's brain. it goes through possible winning solutions & then goes to possible blocking solutions & finally goes to whatever is still available.
 		var box1 = $('.box1').text();
 		var box2 = $('.box2').text();
 		var box3 = $('.box3').text();
@@ -69,240 +93,220 @@ var $ticTacToe = {
 		var box8 = $('.box8').text();
 		var box9 = $('.box9').text();
 		 
-		if ($ticTacToe.currentMove === "X") {
+		if ($ticTacToe.currentMove === $ticTacToe.computerIs) {
 			//across wins
-			if (box1==="X" && box2==="X" && box3==="-"){
-				$ticTacToe.box3("X");
+			if (box5 === "-") {
+				$ticTacToe.box5($ticTacToe.computerIs);
+				$ticTacToe.computerCheck();
+			} else if (box5===$ticTacToe.player && $ticTacToe.playerMoves===1) {
+				$ticTacToe.box7($ticTacToe.computerIs);
+				$ticTacToe.computerCheck();
+			} else if (box5===$ticTacToe.player && box9===$ticTacToe.player && $ticTacToe.playerMoves===2){
+				$ticTacToe.box1($ticTacToe.computerIs);
+				$ticTacToe.computerCheck();
+			} else if (box5===$ticTacToe.player && box3===$ticTacToe.player && $ticTacToe.playerMoves===2){
+				$ticTacToe.box1($ticTacToe.computerIs);
+				$ticTacToe.computerCheck();
+			} else if (box5===$ticTacToe.player && box1===$ticTacToe.player && $ticTacToe.playerMoves===2){
+				$ticTacToe.box9($ticTacToe.computerIs);
+				$ticTacToe.computerCheck();
+			} else if (box1===$ticTacToe.computerIs && box2===$ticTacToe.computerIs && box3==="-"){
+				$ticTacToe.box3($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();	
-			} else if (box1==="X" && box3==="X" && box2==="-"){
-				$ticTacToe.box2("X");
+			} else if (box1===$ticTacToe.computerIs && box3===$ticTacToe.computerIs && box2==="-"){
+				$ticTacToe.box2($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
-			} else if (box2==="X" && box3==="X" && box1==="-"){
-				$ticTacToe.box1("X");
+			} else if (box2===$ticTacToe.computerIs && box3===$ticTacToe.computerIs && box1==="-"){
+				$ticTacToe.box1($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
-			} else if (box7==="X" && box8==="X" && box9==="-"){
-				$ticTacToe.box9("X");
+			} else if (box7===$ticTacToe.computerIs && box8===$ticTacToe.computerIs && box9==="-"){
+				$ticTacToe.box9($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
-			} else if (box7==="X" && box9==="X" && box8==="-"){
-				$ticTacToe.box8("X");
+			} else if (box7===$ticTacToe.computerIs && box9===$ticTacToe.computerIs && box8==="-"){
+				$ticTacToe.box8($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
-			} else if (box8==="X" && box9==="X" && box7==="-"){
-				$ticTacToe.box9("X");
+			} else if (box8===$ticTacToe.computerIs && box9===$ticTacToe.computerIs && box7==="-"){
+				$ticTacToe.box9($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
-			} else if (box4==="X" && box5==="X" && box6==="-"){
-				$ticTacToe.box6("X");
+			} else if (box4===$ticTacToe.computerIs && box5===$ticTacToe.computerIs && box6==="-"){
+				$ticTacToe.box6($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
-			} else if (box4==="X" && box6==="X" && box5==="-"){
-				$ticTacToe.box5("X");
+			} else if (box4===$ticTacToe.computerIs && box6===$ticTacToe.computerIs && box5==="-"){
+				$ticTacToe.box5($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
-			} else if (box5==="X" && box6==="X" && box4==="-"){
-				$ticTacToe.box4("X");
+			} else if (box5===$ticTacToe.computerIs && box6===$ticTacToe.computerIs && box4==="-"){
+				$ticTacToe.box4($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
 				//down wins // 1 4 7
-			} else if (box1==="X" && box4==="X" && box7==="-"){
-				$ticTacToe.box7("X");
+			} else if (box1===$ticTacToe.computerIs && box4===$ticTacToe.computerIs && box7==="-"){
+				$ticTacToe.box7($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
-			} else if (box1==="X" && box7==="X" && box4==="-"){
-				$ticTacToe.box4("X");
+			} else if (box1===$ticTacToe.computerIs && box7===$ticTacToe.computerIs && box4==="-"){
+				$ticTacToe.box4($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
-			} else if (box4==="X" && box7==="X" && box1==="-"){
-				$ticTacToe.box1("X");
+			} else if (box4===$ticTacToe.computerIs && box7===$ticTacToe.computerIs && box1==="-"){
+				$ticTacToe.box1($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
 				//down wins // 2 5 8
-			} else if (box2==="X" && box5==="X" && box8==="-"){
-				$ticTacToe.box8("X");
+			} else if (box2===$ticTacToe.computerIs && box5===$ticTacToe.computerIs && box8==="-"){
+				$ticTacToe.box8($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
-			} else if (box2==="X" && box8==="X" && box5==="-"){
-				$ticTacToe.box5("X");
+			} else if (box2===$ticTacToe.computerIs && box8===$ticTacToe.computerIs && box5==="-"){
+				$ticTacToe.box5($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
-			} else if (box5==="X" && box8==="X" && box2==="-"){
-				$ticTacToe.box2("X");
+			} else if (box5===$ticTacToe.computerIs && box8===$ticTacToe.computerIs && box2==="-"){
+				$ticTacToe.box2($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
 				// down wins // 3 6 9
-			} else if (box3==="X" && box6==="X" && box9==="-"){
-				$ticTacToe.box9("X");
+			} else if (box3===$ticTacToe.computerIs && box6===$ticTacToe.computerIs && box9==="-"){
+				$ticTacToe.box9($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
-			} else if (box3==="X" && box9==="X" && box6==="-"){
-				$ticTacToe.box6("X");
+			} else if (box3===$ticTacToe.computerIs && box9===$ticTacToe.computerIs && box6==="-"){
+				$ticTacToe.box6($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
-			} else if (box6==="X" && box9==="X" && box3==="-"){
-				$ticTacToe.box3("X");
+			} else if (box6===$ticTacToe.computerIs && box9===$ticTacToe.computerIs && box3==="-"){
+				$ticTacToe.box3($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
 			//diagnol wins // 1 5 9
-			} else if (box1==="X" && box5==="X" && box9==="-"){
-				$ticTacToe.box9("X");
+			} else if (box1===$ticTacToe.computerIs && box5===$ticTacToe.computerIs && box9==="-"){
+				$ticTacToe.box9($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
-			} else if (box1==="X" && box9==="X" && box5==="-"){
-				$ticTacToe.box5("X");
+			} else if (box1===$ticTacToe.computerIs && box9===$ticTacToe.computerIs && box5==="-"){
+				$ticTacToe.box5($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
-			} else if (box5==="X" && box9==="X" && box1==="-"){
-				$ticTacToe.box1("X");
+			} else if (box5===$ticTacToe.computerIs && box9===$ticTacToe.computerIs && box1==="-"){
+				$ticTacToe.box1($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
 			//diagnol wins // 3 5 7
-			} else if (box3==="X" && box5==="X" && box7==="-"){
-				$ticTacToe.box7("X");
+			} else if (box3===$ticTacToe.computerIs && box5===$ticTacToe.computerIs && box7==="-"){
+				$ticTacToe.box7($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
-			} else if (box3==="X" && box7==="X" && box5==="-"){
-				$ticTacToe.box5("X");
+			} else if (box3===$ticTacToe.computerIs && box7===$ticTacToe.computerIs && box5==="-"){
+				$ticTacToe.box5($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
-			} else if (box5==="X" && box7==="X" && box3==="-"){
-				$ticTacToe.box3("X");
+			} else if (box5===$ticTacToe.computerIs && box7===$ticTacToe.computerIs && box3==="-"){
+				$ticTacToe.box3($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
+			
 			//block O from winning
-			} else if (box1 === "O" && box3 === "O" && box2 === "-") {
-				$ticTacToe.box2("X");
+			} else if (box1 === $ticTacToe.player && box3 === $ticTacToe.player && box2 === "-") {
+				$ticTacToe.box2($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
-			} else if (box1 === "O" && box2 === "O" && box3 === "-") {
-				$ticTacToe.box3("X");
+			} else if (box1 === $ticTacToe.player && box2 === $ticTacToe.player && box3 === "-") {
+				$ticTacToe.box3($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
-			} else if (box3 === "O" && box2 === "O" && box1 === "-") {
-				$ticTacToe.box1("X");
+			} else if (box3 === $ticTacToe.player && box2 === $ticTacToe.player && box1 === "-") {
+				$ticTacToe.box1($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
-			} else if (box4 === "O" && box5 === "O" && box6 === "-") {
-				$ticTacToe.box6("X");
+			} else if (box4 === $ticTacToe.player && box5 === $ticTacToe.player && box6 === "-") {
+				$ticTacToe.box6($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
-			} else if (box4 === "O" && box6 === "O" & box5 === "-") {
-				$ticTacToe.box5("X");
+			} else if (box4 === $ticTacToe.player && box6 === $ticTacToe.player & box5 === "-") {
+				$ticTacToe.box5($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
-			} else if (box5 === "O" && box6 === "O" && box4 === "-") {
-				$ticTacToe.box4("X");
+			} else if (box5 === $ticTacToe.player && box6 === $ticTacToe.player && box4 === "-") {
+				$ticTacToe.box4($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
-			} else if (box7 === "O" && box8 === "O" && box9 === "-") {
-				$ticTacToe.box9("X");
+			} else if (box7 === $ticTacToe.player && box8 === $ticTacToe.player && box9 === "-") {
+				$ticTacToe.box9($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
-			} else if (box7 === "O" && box9 === "O" && box8 === "-") {
-				$ticTacToe.box8("X");
+			} else if (box7 === $ticTacToe.player && box9 === $ticTacToe.player && box8 === "-") {
+				$ticTacToe.box8($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
-			} else if (box8 === "O" && box9 === "O" && box7 === "-") {
-				$ticTacToe.box7("X");
+			} else if (box8 === $ticTacToe.player && box9 === $ticTacToe.player && box7 === "-") {
+				$ticTacToe.box7($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
 				// down blocks
-			} else if (box1 === "O" && box4 === "O" && box7 === "-") {
-				$ticTacToe.box7("X");
+			} else if (box1 === $ticTacToe.player && box4 === $ticTacToe.player && box7 === "-") {
+				$ticTacToe.box7($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
-			} else if (box1 === "O" && box7 === "O" && box4 === "-") {
-				$ticTacToe.box4("X");
+			} else if (box1 === $ticTacToe.player && box7 === $ticTacToe.player && box4 === "-") {
+				$ticTacToe.box4($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
-			} else if (box4 === "O" && box7 === "O" && box1 === "-") {
-				$ticTacToe.box1("X");
+			} else if (box4 === $ticTacToe.player && box7 === $ticTacToe.player && box1 === "-") {
+				$ticTacToe.box1($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
-			} else if (box2 === "O" && box5 === "O" && box8 === "-") {
-				$ticTacToe.box8("X");
+			} else if (box2 === $ticTacToe.player && box5 === $ticTacToe.player && box8 === "-") {
+				$ticTacToe.box8($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
-			} else if (box2 === "O" && box8 === "O" && box5 === "-") {
-				$ticTacToe.box5("X");
+			} else if (box2 === $ticTacToe.player && box8 === $ticTacToe.player && box5 === "-") {
+				$ticTacToe.box5($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
-			} else if (box5 === "O" && box8 === "O" && box2 === "-") {
-				$ticTacToe.box2("X");
+			} else if (box5 === $ticTacToe.player && box8 === $ticTacToe.player && box2 === "-") {
+				$ticTacToe.box2($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
-			} else if (box3 === "O" && box6 === "O" && box9 === "-") {
-				$ticTacToe.box9("X");
+			} else if (box3 === $ticTacToe.player && box6 === $ticTacToe.player && box9 === "-") {
+				$ticTacToe.box9($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
-			} else if (box3 === "O" && box9 === "O" && box6 === "-") {
-				$ticTacToe.box6("X");
+			} else if (box3 === $ticTacToe.player && box9 === $ticTacToe.player && box6 === "-") {
+				$ticTacToe.box6($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
-			} else if (box6 === "O" && box9 === "O" && box3 === "-") {
-				$ticTacToe.box3("X");
+			} else if (box6 === $ticTacToe.player && box9 === $ticTacToe.player && box3 === "-") {
+				$ticTacToe.box3($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
 				//diagnal blocks	
-			} else if (box1 === "O" && box5 === "O" && box9 === "-") {
-				$ticTacToe.box9("X");
+			} else if (box1 === $ticTacToe.player && box5 === $ticTacToe.player && box9 === "-") {
+				$ticTacToe.box9($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
-			} else if (box1 === "O" && box9 === "O" && box5 === "-") {
-				$ticTacToe.box5("X");
+			} else if (box1 === $ticTacToe.player && box9 === $ticTacToe.player && box5 === "-") {
+				$ticTacToe.box5($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
-			} else if (box5 === "O" && box9 === "O" && box1 === "-") {
-				$ticTacToe.box1("X");
+			} else if (box5 === $ticTacToe.player && box9 === $ticTacToe.player && box1 === "-") {
+				$ticTacToe.box1($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
-			} else if (box3 === "O" && box5 === "O" && box7 === "-") {
-				$ticTacToe.box7("X");
+			} else if (box3 === $ticTacToe.player && box5 === $ticTacToe.player && box7 === "-") {
+				$ticTacToe.box7($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
-			} else if (box3 === "O" && box7 === "O" && box5 === "-") {
-				$ticTacToe.box5("X");
+			} else if (box3 === $ticTacToe.player && box7 === $ticTacToe.player && box5 === "-") {
+				$ticTacToe.box5($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
-			} else if (box5 === "O" && box7 === "O" && box3 === "-") {
-				$ticTacToe.box3("X");
+			} else if (box5 === $ticTacToe.player && box7 === $ticTacToe.player && box3 === "-") {
+				$ticTacToe.box3($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
 			//choose whatever is left/available.
-			} else if (box5 === "-") {
-				$ticTacToe.box5("X");
-				$ticTacToe.computerCheck();
-			} else if (box3 === "-") {
-				$ticTacToe.box3("X");
-				$ticTacToe.computerCheck();
-			} else if (box7 === "-") {
-				$ticTacToe.box7("X");
-				$ticTacToe.computerCheck();
-			} else if (box1 === "-") {
-				$ticTacToe.box1("X");
-				$ticTacToe.computerCheck();
-			} else if (box9 === "-") {
-				$ticTacToe.box9("X");
-				$ticTacToe.computerCheck();
-			} else if (box2 === "-") {
-				$ticTacToe.box2("X");
+			} else if (box6 === "-") {
+				$ticTacToe.box6($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
 			} else if (box4 === "-") {
-				$ticTacToe.box4("X");
-				$ticTacToe.computerCheck();
-			} else if (box6 === "-") {
-				$ticTacToe.box6("X");
+				$ticTacToe.box4($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
 			} else if (box8 === "-") {
-				$ticTacToe.box8("X");
+				$ticTacToe.box8($ticTacToe.computerIs);
 				$ticTacToe.computerCheck();
-			} 
+			} else if (box1 === "-") {
+				$ticTacToe.box1($ticTacToe.computerIs);
+				$ticTacToe.computerCheck();
+			} else if (box2 === "-") {
+				$ticTacToe.box2($ticTacToe.computerIs);
+				$ticTacToe.computerCheck();
+			} else if (box9 === "-") {
+				$ticTacToe.box9($ticTacToe.computerIs);
+				$ticTacToe.computerCheck(); 
+			} else if (box7 === "-") {
+				$ticTacToe.box7($ticTacToe.computerIs);
+				$ticTacToe.computerCheck();
+			} else if (box3 === "-") {
+				$ticTacToe.box3($ticTacToe.computerIs);
+				$ticTacToe.computerCheck();
+			}
 		};		
 	},
 
-	xWins: function() {
+	xWins: function() { // if X is the winner this function will provide notification of the same 
 		alert('X WINS');
 		$ticTacToe.winCountX = $ticTacToe.winCountX + 1;
 		$('.winCounterX').text('X: ' + $ticTacToe.winCountX);	
 		$ticTacToe.reset();
 	},
 
-	checkX: function() {
-		var box1 = $('.box1').text();
-		var box2 = $('.box2').text();
-		var box3 = $('.box3').text();
-		var box4 = $('.box4').text();
-		var box5 = $('.box5').text();
-		var box6 = $('.box6').text();
-		var box7 = $('.box7').text();
-		var box8 = $('.box8').text();
-		var box9 = $('.box9').text();
-
-		//across
-		if (box1==="X" && box2==="X" && box3==="X"){
-			$ticTacToe.xWins();		
-		} else if (box7==="X" && box8==="X" && box9==="X"){
-			$ticTacToe.xWins();
-		} else if (box4==="X" && box5==="X" && box6==="X"){
-			$ticTacToe.xWins();
-		//down
-		} else if (box1==="X" && box4==="X" && box7==="X"){
-			$ticTacToe.xWins();
-		} else if (box2==="X" && box5==="X" && box8==="X"){
-			$ticTacToe.xWins();
-		} else if (box3==="X" && box6==="X" && box9==="X"){
-			$ticTacToe.xWins();
-		//diagnol
-		} else if (box1==="X" && box5==="X" && box9==="X"){
-			$ticTacToe.xWins();
-		} else if (box3==="X" && box5==="X" && box7==="X"){
-			$ticTacToe.xWins();	
-		};
+	oWins: function() { // if O is the winner this function will provide notification.
+		alert('O WINS');
+		$ticTacToe.winCountO = $ticTacToe.winCountO + 1;
+		$('.winCounterO').text('O: ' + $ticTacToe.winCountO);
+		$ticTacToe.reset();
 	},
 
-	oWins: function() {
-			alert('O WINS');
-			$ticTacToe.winCountO = $ticTacToe.winCountO + 1;
-			$('.winCounterO').text('O: ' + $ticTacToe.winCountO);
-			$ticTacToe.reset();
-	},
-
-	checkO: function() {
+	check: function() { // fhecks for winner.
 		var box1 = $('.box1').text();
 		var box2 = $('.box2').text();
 		var box3 = $('.box3').text();
@@ -332,10 +336,29 @@ var $ticTacToe = {
 		} else if (box3==="O" && box5==="O" && box7==="O"){
 			$ticTacToe.oWins();
 		};
+		if (box1==="X" && box2==="X" && box3==="X"){
+			$ticTacToe.xWins();		
+		} else if (box7==="X" && box8==="X" && box9==="X"){
+			$ticTacToe.xWins();
+		} else if (box4==="X" && box5==="X" && box6==="X"){
+			$ticTacToe.xWins();
+		//down
+		} else if (box1==="X" && box4==="X" && box7==="X"){
+			$ticTacToe.xWins();
+		} else if (box2==="X" && box5==="X" && box8==="X"){
+			$ticTacToe.xWins();
+		} else if (box3==="X" && box6==="X" && box9==="X"){
+			$ticTacToe.xWins();
+		//diagnol
+		} else if (box1==="X" && box5==="X" && box9==="X"){
+			$ticTacToe.xWins();
+		} else if (box3==="X" && box5==="X" && box7==="X"){
+			$ticTacToe.xWins();	
+		};
 			
 	}, 
 
-	checkDraw: function(){
+	checkDraw: function(){ // checks draw.
 		if ($ticTacToe.numMoves >= 9) {
 			$ticTacToe.drawCount = $ticTacToe.drawCount + 1;
 			$('.drawCounter').text('DRAW: ' + $ticTacToe.drawCount);
@@ -344,18 +367,21 @@ var $ticTacToe = {
 		};
 	},
 
-	reset: function(){
+	reset: function(){ // resets values back to game start values.
 		$('td').text('-');		
 		$ticTacToe.numMoves = 0;
-		$ticTacToe.oNumMoves = 0;
-		$ticTacToe.xNumMoves = 0;
+		$ticTacToe.playerMoves = 0;
+		$ticTacToe.compMoves = 0;
 	}
 };
 $('document').ready(function () {
-	$('table').hide();
-	$('.winCounter').hide();
-	$('.reset').hide();
-	$ticTacToe.init();
+	$('table').hide(); // on initialise the game table is hidden
+	$('.winCounter').hide();// win counter is hidden
+	$('.reset').hide(); // reset button is hidden
+	$('.chooseO').hide();
+	$('.chooseX').hide();
+	$ticTacToe.init(); // initialises the game.
+
 });
 
 /* some CSS stuff for two player version. 
