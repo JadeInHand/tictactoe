@@ -368,7 +368,7 @@ var $ticTacToe = {
 			alert("Try again.");
 		} else if ($ticTacToe.drawCount >= 5) {
 			alert("I'm sure you'll get it if you keep trying.")
-		} else if ($ticTacToe.drawCount >= 5)
+		} 
 	},
 
 	reset: function(){ // resets values back to game start values.
