@@ -21,7 +21,7 @@ var $ticTacToe = {
 				$('.currentPlayer').text("Its currently " + $ticTacToe.currentMove + "s go.")	
 			};		
 		});
-		$('button').on('click', function(){
+		$('.reset').on('click', function(){
 			$ticTacToe.reset();
 		});
 
@@ -109,7 +109,7 @@ var $ticTacToe = {
 
 	
 	checkDraw: function(){
-		if ($ticTacToe.numMoves >= 9) {
+		if ($ticTacToe.numMoves >= 9) { 
 			$ticTacToe.drawCount = $ticTacToe.drawCount + 1;
 			$('.drawCounter').text('DRAW: ' + $ticTacToe.drawCount);
 			alert('PLAYERS DRAW');

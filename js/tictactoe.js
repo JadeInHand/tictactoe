@@ -34,20 +34,20 @@ var $ticTacToe = {
 			$('.chooseX').show();
 			$('.chooseO').show();
 		});
-		$('.chooseX').on('click', function(){
-			$('.chooseX').hide();
+		$('.chooseX').on('click', function(){ // button shows itself after first button is clicked.
+			$('.chooseX').hide(); //hides itself & the other button after being clicked.
 			$('.chooseO').hide();
-			$('table').show();
+			$('table').show(); //shows the relevant game components.
 			$('.winCounter').show();
 			$('.reset').show();
-			$ticTacToe.player = "X";
+			$ticTacToe.player = "X"; // places the selected player value into the player variable to hold this info for later. same for computer.
 			$ticTacToe.computerIs = "O";
-			$('.currentPlayer').text("You are playing as " + $ticTacToe.player + ".");
-			$ticTacToe.computer();
+			$('.currentPlayer').text("You are playing as " + $ticTacToe.player + "."); // adds who you are playing as to the screen, in case you forget.
+			$ticTacToe.computer(); // calls the computer function to start.
 
 		});
 		$('.chooseO').on('click', function(){
-			$('.chooseX').hide();
+			$('.chooseX').hide(); // same as above.
 			$('.chooseO').hide();
 			$('table').show();
 			$('.winCounter').show();
@@ -58,7 +58,7 @@ var $ticTacToe = {
 			$ticTacToe.computer();
 		});
 
-		$('.reset').on('click', function(){
+		$('.reset').on('click', function(){ // resets the gameboard & game mechanics to 0
 			$ticTacToe.reset();
 
 		});
@@ -317,42 +317,42 @@ var $ticTacToe = {
 		var box8 = $('.box8').text();
 		var box9 = $('.box9').text();
 		
-		if (box1==="O" && box2==="O" && box3==="O"){
+		if (box1==="O" && box2==="O" && box3==="O") {
 			$ticTacToe.oWins();
-		} else if (box7==="O" && box8==="O" && box9==="O"){
+		} else if (box7==="O" && box8==="O" && box9==="O") {
 			$ticTacToe.oWins();
-		} else if (box4==="O" && box5==="O" && box6==="O"){
+		} else if (box4==="O" && box5==="O" && box6==="O") {
 			$ticTacToe.oWins();
 		//down
-		} else if (box1==="O" && box4==="O" && box7==="O"){
+		} else if (box1==="O" && box4==="O" && box7==="O") {
 			$ticTacToe.oWins();
-		} else if (box2==="O" && box5==="O" && box8==="O"){
+		} else if (box2==="O" && box5==="O" && box8==="O") {
 			$ticTacToe.oWins();
-		} else if (box3==="O" && box6==="O" && box9==="O"){
+		} else if (box3==="O" && box6==="O" && box9==="O") {
 			$ticTacToe.oWins();
 		//diagnol
-		} else if (box1==="O" && box5==="O" && box9==="O"){
+		} else if (box1==="O" && box5==="O" && box9==="O") {
 			$ticTacToe.oWins();
-		} else if (box3==="O" && box5==="O" && box7==="O"){
+		} else if (box3==="O" && box5==="O" && box7==="O") {
 			$ticTacToe.oWins();
 		};
-		if (box1==="X" && box2==="X" && box3==="X"){
+		if (box1==="X" && box2==="X" && box3==="X") {
 			$ticTacToe.xWins();		
-		} else if (box7==="X" && box8==="X" && box9==="X"){
+		} else if (box7==="X" && box8==="X" && box9==="X") {
 			$ticTacToe.xWins();
-		} else if (box4==="X" && box5==="X" && box6==="X"){
+		} else if (box4==="X" && box5==="X" && box6==="X") {
 			$ticTacToe.xWins();
 		//down
-		} else if (box1==="X" && box4==="X" && box7==="X"){
+		} else if (box1==="X" && box4==="X" && box7==="X") {
 			$ticTacToe.xWins();
-		} else if (box2==="X" && box5==="X" && box8==="X"){
+		} else if (box2==="X" && box5==="X" && box8==="X") {
 			$ticTacToe.xWins();
-		} else if (box3==="X" && box6==="X" && box9==="X"){
+		} else if (box3==="X" && box6==="X" && box9==="X") {
 			$ticTacToe.xWins();
 		//diagnol
-		} else if (box1==="X" && box5==="X" && box9==="X"){
+		} else if (box1==="X" && box5==="X" && box9==="X") {
 			$ticTacToe.xWins();
-		} else if (box3==="X" && box5==="X" && box7==="X"){
+		} else if (box3==="X" && box5==="X" && box7==="X") {
 			$ticTacToe.xWins();	
 		};
 			
@@ -362,9 +362,13 @@ var $ticTacToe = {
 		if ($ticTacToe.numMoves >= 9) {
 			$ticTacToe.drawCount = $ticTacToe.drawCount + 1;
 			$('.drawCounter').text('DRAW: ' + $ticTacToe.drawCount);
-			alert('PLAYERS DRAW');
 			$ticTacToe.reset();
-		};
+		} 
+		if ($ticTacToe.drawCount >= 1) {
+			alert("Try again.");
+		} else if ($ticTacToe.drawCount >= 5) {
+			alert("I'm sure you'll get it if you keep trying.")
+		} else if ($ticTacToe.drawCount >= 5)
 	},
 
 	reset: function(){ // resets values back to game start values.
@@ -384,22 +388,3 @@ $('document').ready(function () {
 
 });
 
-/* some CSS stuff for two player version. 
-.currentPlayer {
-	position: absolute;
-	text-align: center;
-	line-height: 86px;
-	width: 180px;
-	height: 89px;
-	border: 1px solid black;
-	left: 329px;
-	top: -98px;
-	font-size: 108px;
-
-}
-<h3 class="currentPlayer"> O </h3>
-
-$('.currentPlayer').text("O");
-$('.currentPlayer').text("X");
-
-*/
