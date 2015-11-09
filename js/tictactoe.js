@@ -65,13 +65,10 @@ var $ticTacToe = {
 			$ticTacToe.computer();
 		});
 
-<<<<<<< HEAD
 		$('.reset').on('click', function(){ // resets the gameboard & game mechanics to 0
-			$ticTacToe.reset();
-=======
+			$ticTacToe.reseted();
 		$('.reset').on('click', function(){
 			$ticTacToe.reseted();
->>>>>>> master
 
 		});
 
@@ -381,19 +378,10 @@ var $ticTacToe = {
 		if ($ticTacToe.numMoves >= 9) {
 			$ticTacToe.drawCount = $ticTacToe.drawCount + 1;
 			$('.drawCounter').text('DRAW: ' + $ticTacToe.drawCount);
-<<<<<<< HEAD
-			$ticTacToe.reset();
-		} 
-//		if ($ticTacToe.drawCount >= 1) {
-//			alert("Try again.");
-//		} else if ($ticTacToe.drawCount >= 5) {
-//			alert("I'm sure you'll get it if you keep trying.")
-//		} 
-=======
 			alert('PLAYERS DRAW');
 			$ticTacToe.reseted();
-		};
->>>>>>> master
+		}
+
 	},
 
 	reseted: function(){ // resets values back to game start values.
@@ -411,9 +399,9 @@ $('document').ready(function () {
 	$('.chooseX').hide();
 	$ticTacToe.init(); // initialises the game.
 
-<<<<<<< HEAD
+
 });
 
-=======
+
 });
->>>>>>> master
+
