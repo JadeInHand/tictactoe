@@ -31,6 +31,7 @@ var $ticTacToe = {
 		});
 		$('.play').on('click', function(){
 			$('.play').hide();
+			$('.playertwo').hide();
 			$('.chooseX').show();
 			$('.chooseO').show();
 		});
@@ -40,7 +41,12 @@ var $ticTacToe = {
 			$('table').show(); //shows the relevant game components.
 			$('.winCounter').show();
 			$('.reset').show();
+<<<<<<< HEAD
 			$ticTacToe.player = "X"; // places the selected player value into the player variable to hold this info for later. same for computer.
+=======
+			$('.playertwo').show();
+			$ticTacToe.player = "X";
+>>>>>>> master
 			$ticTacToe.computerIs = "O";
 			$('.currentPlayer').text("You are playing as " + $ticTacToe.player + "."); // adds who you are playing as to the screen, in case you forget.
 			$ticTacToe.computer(); // calls the computer function to start.
@@ -50,6 +56,7 @@ var $ticTacToe = {
 			$('.chooseX').hide(); // same as above.
 			$('.chooseO').hide();
 			$('table').show();
+			$('.playertwo').show();
 			$('.winCounter').show();
 			$('.reset').show();
 			$ticTacToe.player = "O";
@@ -58,8 +65,13 @@ var $ticTacToe = {
 			$ticTacToe.computer();
 		});
 
+<<<<<<< HEAD
 		$('.reset').on('click', function(){ // resets the gameboard & game mechanics to 0
 			$ticTacToe.reset();
+=======
+		$('.reset').on('click', function(){
+			$ticTacToe.reseted();
+>>>>>>> master
 
 		});
 
@@ -296,17 +308,17 @@ var $ticTacToe = {
 		alert('X WINS');
 		$ticTacToe.winCountX = $ticTacToe.winCountX + 1;
 		$('.winCounterX').text('X: ' + $ticTacToe.winCountX);	
-		$ticTacToe.reset();
+		$ticTacToe.reseted();
 	},
 
 	oWins: function() { // if O is the winner this function will provide notification.
 		alert('O WINS');
 		$ticTacToe.winCountO = $ticTacToe.winCountO + 1;
 		$('.winCounterO').text('O: ' + $ticTacToe.winCountO);
-		$ticTacToe.reset();
+		$ticTacToe.reseted();
 	},
 
-	check: function() { // fhecks for winner.
+	check: function() { // checks for winner.
 		var box1 = $('.box1').text();
 		var box2 = $('.box2').text();
 		var box3 = $('.box3').text();
@@ -355,13 +367,21 @@ var $ticTacToe = {
 		} else if (box3==="X" && box5==="X" && box7==="X") {
 			$ticTacToe.xWins();	
 		};
-			
+		//Checking draw
+		// if ($ticTacToe.numMoves >= 9) {
+		// 	$ticTacToe.drawCount = $ticTacToe.drawCount + 1;
+		// 	$('.drawCounter').text('DRAW: ' + $ticTacToe.drawCount);
+		// 	alert('PLAYERS DRAW');
+		// 	$ticTacToe.reseted();
+		// };
+
 	}, 
 
 	checkDraw: function(){ // checks draw.
 		if ($ticTacToe.numMoves >= 9) {
 			$ticTacToe.drawCount = $ticTacToe.drawCount + 1;
 			$('.drawCounter').text('DRAW: ' + $ticTacToe.drawCount);
+<<<<<<< HEAD
 			$ticTacToe.reset();
 		} 
 //		if ($ticTacToe.drawCount >= 1) {
@@ -369,9 +389,14 @@ var $ticTacToe = {
 //		} else if ($ticTacToe.drawCount >= 5) {
 //			alert("I'm sure you'll get it if you keep trying.")
 //		} 
+=======
+			alert('PLAYERS DRAW');
+			$ticTacToe.reseted();
+		};
+>>>>>>> master
 	},
 
-	reset: function(){ // resets values back to game start values.
+	reseted: function(){ // resets values back to game start values.
 		$('td').text('-');		
 		$ticTacToe.numMoves = 0;
 		$ticTacToe.playerMoves = 0;
@@ -386,5 +411,9 @@ $('document').ready(function () {
 	$('.chooseX').hide();
 	$ticTacToe.init(); // initialises the game.
 
+<<<<<<< HEAD
 });
 
+=======
+});
+>>>>>>> master
