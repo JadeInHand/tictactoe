@@ -31,6 +31,7 @@ var $ticTacToe = {
 		});
 		$('.play').on('click', function(){
 			$('.play').hide();
+			$('.playertwo').hide();
 			$('.chooseX').show();
 			$('.chooseO').show();
 		});
@@ -40,6 +41,7 @@ var $ticTacToe = {
 			$('table').show();
 			$('.winCounter').show();
 			$('.reset').show();
+			$('.playertwo').show();
 			$ticTacToe.player = "X";
 			$ticTacToe.computerIs = "O";
 			$('.currentPlayer').text("You are playing as " + $ticTacToe.player + ".");
@@ -50,6 +52,7 @@ var $ticTacToe = {
 			$('.chooseX').hide();
 			$('.chooseO').hide();
 			$('table').show();
+			$('.playertwo').show();
 			$('.winCounter').show();
 			$('.reset').show();
 			$ticTacToe.player = "O";
@@ -59,7 +62,7 @@ var $ticTacToe = {
 		});
 
 		$('.reset').on('click', function(){
-			$ticTacToe.reset();
+			$ticTacToe.reseted();
 
 		});
 
@@ -296,17 +299,17 @@ var $ticTacToe = {
 		alert('X WINS');
 		$ticTacToe.winCountX = $ticTacToe.winCountX + 1;
 		$('.winCounterX').text('X: ' + $ticTacToe.winCountX);	
-		$ticTacToe.reset();
+		$ticTacToe.reseted();
 	},
 
 	oWins: function() { // if O is the winner this function will provide notification.
 		alert('O WINS');
 		$ticTacToe.winCountO = $ticTacToe.winCountO + 1;
 		$('.winCounterO').text('O: ' + $ticTacToe.winCountO);
-		$ticTacToe.reset();
+		$ticTacToe.reseted();
 	},
 
-	check: function() { // fhecks for winner.
+	check: function() { // checks for winner.
 		var box1 = $('.box1').text();
 		var box2 = $('.box2').text();
 		var box3 = $('.box3').text();
@@ -355,7 +358,14 @@ var $ticTacToe = {
 		} else if (box3==="X" && box5==="X" && box7==="X"){
 			$ticTacToe.xWins();	
 		};
-			
+		//Checking draw
+		// if ($ticTacToe.numMoves >= 9) {
+		// 	$ticTacToe.drawCount = $ticTacToe.drawCount + 1;
+		// 	$('.drawCounter').text('DRAW: ' + $ticTacToe.drawCount);
+		// 	alert('PLAYERS DRAW');
+		// 	$ticTacToe.reseted();
+		// };
+
 	}, 
 
 	checkDraw: function(){ // checks draw.
@@ -363,11 +373,11 @@ var $ticTacToe = {
 			$ticTacToe.drawCount = $ticTacToe.drawCount + 1;
 			$('.drawCounter').text('DRAW: ' + $ticTacToe.drawCount);
 			alert('PLAYERS DRAW');
-			$ticTacToe.reset();
+			$ticTacToe.reseted();
 		};
 	},
 
-	reset: function(){ // resets values back to game start values.
+	reseted: function(){ // resets values back to game start values.
 		$('td').text('-');		
 		$ticTacToe.numMoves = 0;
 		$ticTacToe.playerMoves = 0;
@@ -383,23 +393,3 @@ $('document').ready(function () {
 	$ticTacToe.init(); // initialises the game.
 
 });
-
-/* some CSS stuff for two player version. 
-.currentPlayer {
-	position: absolute;
-	text-align: center;
-	line-height: 86px;
-	width: 180px;
-	height: 89px;
-	border: 1px solid black;
-	left: 329px;
-	top: -98px;
-	font-size: 108px;
-
-}
-<h3 class="currentPlayer"> O </h3>
-
-$('.currentPlayer').text("O");
-$('.currentPlayer').text("X");
-
-*/

@@ -31,18 +31,18 @@ border-radius: 10px 10px 10px 10px;
 
 .chooseO {
 	position: absolute;
-	left: 55px;
-	height: 80px;
-	top: 50px;
+	left: 30px;
+	height: 75px;
+	top: 322px;
 	width: 80px;
 	font-size: 65px;
 }
 
 .chooseX {
 	position: absolute;
-	left: 140px;
-	height: 80px;
-	top: 50px;
+	left: 300px;
+	height: 75px;
+	top: 322px;
 	width: 80px;
 	font-size: 65px;
 }
