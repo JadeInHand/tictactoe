@@ -1,6 +1,7 @@
 ## TIC TAC BRO
 
 This Tic Tac Toe version was created by Chris Purcell for WDI10 Project 0.
+http://jadeinhand.github.io/tictactoe/ticTacBro.html
 
 # FEATURES
 
