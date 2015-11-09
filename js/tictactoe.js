@@ -41,12 +41,8 @@ var $ticTacToe = {
 			$('table').show(); //shows the relevant game components.
 			$('.winCounter').show();
 			$('.reset').show();
-<<<<<<< HEAD
-			$ticTacToe.player = "X"; // places the selected player value into the player variable to hold this info for later. same for computer.
-=======
 			$('.playertwo').show();
-			$ticTacToe.player = "X";
->>>>>>> master
+			$ticTacToe.player = "X"; // places the selected player value into the player variable to hold this info for later. same for computer.
 			$ticTacToe.computerIs = "O";
 			$('.currentPlayer').text("You are playing as " + $ticTacToe.player + "."); // adds who you are playing as to the screen, in case you forget.
 			$ticTacToe.computer(); // calls the computer function to start.
