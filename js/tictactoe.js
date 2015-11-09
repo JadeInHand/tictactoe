@@ -63,11 +63,7 @@ var $ticTacToe = {
 
 		$('.reset').on('click', function(){ // resets the gameboard & game mechanics to 0
 			$ticTacToe.reseted();
-		$('.reset').on('click', function(){
-			$ticTacToe.reseted();
-
 		});
-
 	},
 
 	playerCheck: function() { // checks the players moves for win or draw & progresses the num moves ahead to help with checking draw. also calls on computer to make its next move.
@@ -77,6 +73,7 @@ var $ticTacToe = {
 		$ticTacToe.playerMoves = $ticTacToe.playerMoves + 1;
 		$ticTacToe.currentMove = $ticTacToe.computerIs;
 		$ticTacToe.computer();
+
 	},
 	
 	computerCheck: function(){ // checks if the computer has won & progresses num moves ahead to aid with checking for draw.
@@ -387,6 +384,7 @@ var $ticTacToe = {
 		$ticTacToe.compMoves = 0;
 	}
 };
+
 $('document').ready(function () {
 	$('table').hide(); // on initialise the game table is hidden
 	$('.winCounter').hide();// win counter is hidden
@@ -398,6 +396,4 @@ $('document').ready(function () {
 
 });
 
-
-});
 
